@@ -511,7 +511,37 @@ config ESP8266_WIFI_DEBUG_LOG_SUBMODULE_WPA2
     help
         When this option is enabled, log for wpa2_enterprise module will be enabled.
 
+
 endmenu
+
+menu "SmartConfig"
+
+    config ESP8266_SC_ACK_INCLUDE_DEVICE_ID
+        bool "Include device ID in SmartConfig ACK"
+        default n
+
+    config ESP8266_DEVICE_ID_PARTITION_NAME
+        string "Device ID partition name"
+        depends on ESP8266_SC_ACK_INCLUDE_DEVICE_ID
+        default "factorynvs"
+
+    config ESP8266_DEVICE_ID_NAMESPACE
+        string "Device ID namespace"
+        depends on ESP8266_SC_ACK_INCLUDE_DEVICE_ID
+        default "factory"
+
+    config ESP8266_DEVICE_ID_KEY_NAME
+        string "Device ID key name"
+        depends on ESP8266_SC_ACK_INCLUDE_DEVICE_ID
+        default "device_id"
+
+    config ESP8266_DEVICE_ID_LENGTH
+        int "Device ID length"
+        depends on ESP8266_SC_ACK_INCLUDE_DEVICE_ID
+        default 14
+
+endmenu  # SmartConfig
+
 
 menu PHY
 
