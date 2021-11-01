@@ -18,6 +18,7 @@
 #include <esp_https_ota.h>
 #include <esp_ota_ops.h>
 #include <esp_log.h>
+#include <esp_system.h>
 #include "sdkconfig.h"
 
 #define OTA_BUF_SIZE    CONFIG_OTA_BUF_SIZE
@@ -56,6 +57,7 @@ esp_err_t esp_https_ota(const esp_http_client_config_t *config)
     }
 #endif
 
+    ESP_LOGW(TAG, "Starting: %u, min: %u", esp_get_free_heap_size(), esp_get_minimum_free_heap_size());
     esp_err_t err = esp_http_client_open(client, 0);
     if (err != ESP_OK) {
         esp_http_client_cleanup(client);
@@ -93,6 +95,7 @@ esp_err_t esp_https_ota(const esp_http_client_config_t *config)
     }
     int binary_file_len = 0;
     while (1) {
+        ESP_LOGW(TAG, "Starting: %u, min: %u", esp_get_free_heap_size(), esp_get_minimum_free_heap_size());
         int data_read = esp_http_client_read(client, upgrade_data_buf, OTA_BUF_SIZE);
         if (data_read == 0) {
             ESP_LOGI(TAG, "Connection closed,all data received");
